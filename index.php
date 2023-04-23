@@ -39,48 +39,11 @@ open_connection_DB();
 	include('static/menu.php'); 
 	?>
 	
-	<?php
-
-
-		// Récupération des noms des responsables d'école de danse depuis la base de données
-		$resultat = mysqli_query($connexion, "SELECT NomFondateur FROM Ecole_De_Danse ORDER BY NomFondateur ASC");
-
-		// Création de la liste déroulante contenant les noms des responsables d'école de danse triés par ordre alphabétique
-		echo '<label for="select_responsable">Sélectionnez votre nom :</label>';
-		echo '<select id="select_responsable" name="select_responsable">';
-		while ($row = mysqli_fetch_array($resultat)) {
-			echo '<option value="' . $row['NomFondateur'] . '">' . $row['NomFondateur'] . '</option>';
-		}
-		echo '</select>';
-
-		 // Récupération des données de l'école de danse sélectionnée
-		 $nom_responsable = $_POST['NomFondateur'];
-		 $resultat = mysqli_query($connexion, "SELECT * FROM Ecole_De_Danse WHERE NomFondateur = '$nom_responsable'");
-		 $ecole = mysqli_fetch_assoc($resultat);
-	 
-		 // Affichage des informations de l'école de danse
-		 echo '<h1>' . $ecole['NomEcole'] . '</h1>';
-		 echo '<p>Adresse : ' . $ecole['Adresse'] . '</p>';
-	 
-		 // Récupération et affichage de la liste des employés de l'école
-		 $resultat = mysqli_query($connexion, "SELECT e.nom, e.prenom 
-		 FROM Employe e 
-		 JOIN travaille t ON e.idEmp = t.idEmp 
-		 JOIN Ecole_De_Danse ed ON t.idEcole = ed.idEcole 
-		 WHERE ed.NomEcole = 'NomEcole';");
-
-		 echo '<h2>Liste des employés :</h2>';
-		 echo '<ul>';
-		 while ($employe = mysqli_fetch_assoc($resultat)) {
-			 echo '<li>' . $employe['nom'] . ' ' . $employe['prenom'] . '</li>';
-		 }
-		 echo '</ul>';
-	 
-
-?>
+	
     <!-- Définition du bloc proncipal -->
      	
 		<main class="main_div">
+		
 		<?php
 		/* Initialisation du contrôleur et le de vue par défaut */
 		$controleur = 'accueil_controleur.php';
