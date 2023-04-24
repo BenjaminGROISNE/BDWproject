@@ -1,11 +1,17 @@
 <?php
-if(isset($_POST['submitFond'])) {
+ if(isset($_GET['info'])) {
+    include ('tdb'); 
+    include ('info');
+}
 
+else if(isset($_POST['submitFond'])) {
+   
     // Récupération de l'ID de l'école de danse sélectionnée
     $nom_responsable = $_POST['select_responsable'];
     $resultat_id = mysqli_query($connexion, "SELECT idEcole FROM Ecole_De_Danse WHERE NomFondateur = '$nom_responsable'");
     $ecole_id = mysqli_fetch_assoc($resultat_id)['idEcole'];
-
+    $_SESSION['idecole']=$ecole_id;
+    $_SESSION['fondateur']=$nom_responsable;
     // Récupération des données de l'école de danse sélectionnée
     $resultat_ecole = mysqli_query($connexion, "SELECT * FROM Ecole_De_Danse E JOIN Adresse A ON E.idAdresse = A.idAdresse WHERE E.idEcole = $ecole_id");
     $ecole = mysqli_fetch_assoc($resultat_ecole);
@@ -13,8 +19,7 @@ if(isset($_POST['submitFond'])) {
     // Récupération des employés de l'école de danse sélectionnée
     $resultat_employes = mysqli_query($connexion, "SELECT DISTINCT E.nom, E.prenom FROM Employe E JOIN travaille T ON E.idEmp = T.idEmp WHERE T.idEcole = $ecole_id");
    
-    echo '<a href="index.php?page=tdb&p=info.php">Modify School Info</a>';
-
+         echo '<a href="index.php?page=tdb&page=info">Modify </a>';
     $liste_cours = mysqli_query($connexion,"SELECT C.Libelle,C.Age FROM Cours C JOIN delivre D ON D.codeCours=C.code AND D.idEc=$ecole_id");
     echo '<ul>';
     echo '<p>Cours proposés :</p>';

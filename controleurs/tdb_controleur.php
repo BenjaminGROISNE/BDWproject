@@ -10,7 +10,7 @@ $resultat = mysqli_query($connexion, "SELECT NomFondateur FROM Ecole_De_Danse OR
  while ($row = mysqli_fetch_array($resultat)) {
      echo '<option value="' . $row['NomFondateur'] . '">' . $row['NomFondateur'] . '</option>';
  }
-
+ 
  echo '</select>';
  echo '<button type="submit" name="submitFond">Valider</button>';
  echo '</form>';
