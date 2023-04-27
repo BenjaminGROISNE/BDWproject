@@ -24,10 +24,17 @@
   echo '</form>';
 
   echo'  <form method="post" action="">';
-    echo ' <label for="nomEcole">NomEcole :</label>';
-    echo '<input type="text" id="nomEcole" name="nomEcole" required>';
+    echo ' <label for="nomFondateur">NomFondateur:</label>';
+    echo '<input type="text" id="nomFondateur" name="nomFondateur" required>';
     echo ' <br><br>';
     echo  '<input type="submit" value="Valider">';
+    
+  echo '</form>';
+  echo'  <form method="post" action="">';
+  echo ' <label for="nomEcole">NomEcole :</label>';
+  echo '<input type="text" id="nomEcole" name="nomEcole" required>';
+  echo ' <br><br>';
+  echo  '<input type="submit" value="Valider">';
   echo '</form>';
   $id_ecole = $_SESSION['idecole'];
 
@@ -35,6 +42,14 @@
     $nameEcole=$_POST['nomEcole'];
     echo $nameEcole;
     $query = 'UPDATE Ecole_De_Danse E SET E.NomEcole="'.$nameEcole.'" WHERE E.idEcole="'.$id_ecole.'"';
+
+    $result = mysqli_query($connexion, $query);
+  }
+
+  if (isset($_POST['nomFondateur'])){
+    $nameFondateur=$_POST['nomFondateur'];
+    echo $nameFondateur;
+    $query = 'UPDATE Ecole_De_Danse E SET E.NomFondateur="'.$nameFondateur.'" WHERE E.idEcole="'.$id_ecole.'"';
 
     $result = mysqli_query($connexion, $query);
   }

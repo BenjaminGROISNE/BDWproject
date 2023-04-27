@@ -166,7 +166,27 @@ nav a:visited {
     font-size: 1.2em;
     margin-left: 4%;
 }
+.stats-list {
+	display: flex;
+	flex-wrap: wrap;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
 
+.stats-list li {
+	flex: 1 0 auto;
+	margin: 0.5em;
+	padding: 0.5em;
+	background-color: #f0f0f0;
+	border-radius: 0.5em;
+	text-align: center;
+	transition: background-color 0.3s ease;
+}
+
+.stats-list li:hover {
+	background-color: #e0e0e0;
+}
 
 .bloc_commandes > select{
     width: 30%; 

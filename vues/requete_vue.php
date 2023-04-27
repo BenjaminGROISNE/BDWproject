@@ -18,7 +18,7 @@
 
 		<?php
 
-		if( isset($resultats) || $message_requete != null) {
+		if( isset($resultats)) {
 
 			 if( is_array($resultats) ) { ?>
 

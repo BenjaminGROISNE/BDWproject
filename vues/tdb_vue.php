@@ -1,10 +1,5 @@
 <?php
- if(isset($_GET['info'])) {
-    include ('tdb'); 
-    include ('info');
-}
-
-else if(isset($_POST['submitFond'])) {
+ if(isset($_POST['submitFond'])) {
    
     // Récupération de l'ID de l'école de danse sélectionnée
     $nom_responsable = $_POST['select_responsable'];
@@ -18,9 +13,14 @@ else if(isset($_POST['submitFond'])) {
 
     // Récupération des employés de l'école de danse sélectionnée
     $resultat_employes = mysqli_query($connexion, "SELECT DISTINCT E.nom, E.prenom FROM Employe E JOIN travaille T ON E.idEmp = T.idEmp WHERE T.idEcole = $ecole_id");
-   
-         echo '<a href="index.php?page=tdb&page=info">Modify </a>';
     $liste_cours = mysqli_query($connexion,"SELECT C.Libelle,C.Age FROM Cours C JOIN delivre D ON D.codeCours=C.code AND D.idEc=$ecole_id");
+
+
+         echo '<a href="index.php?page=tdb&page=info">Modifier InfoEcole </a>';
+         echo '<a href="index.php?page=tdb&page=cours">Modifier Cours </a>';
+         echo '<a href="index.php?page=tdb&page=ajoutEcole">ajouter Ecole </a>';
+
+    //récupération de la liste de cours 
     echo '<ul>';
     echo '<p>Cours proposés :</p>';
     while ($cours = mysqli_fetch_assoc($liste_cours)) {
@@ -28,9 +28,10 @@ else if(isset($_POST['submitFond'])) {
     }
     echo '</ul>';
     // Affichage du nom et de l'adresse de l'école
-    echo '<h1>' . $ecole['NomEcole'] . '</h1>';
     echo '<div style="display: flex;">';
     echo '<div style="width: 50%;">';
+    echo '<h3>' . $ecole['NomEcole'] . '</h3>';
+
     echo '<p><b>Adresse :</b></p>';
     echo '<p>' . $ecole['NumeroVoie'] . ' ' . $ecole['Rue'] . '</p>';
     echo '<p>' . $ecole['Code_Postal'] . ' ' . $ecole['Ville'] . '</p>';
@@ -53,7 +54,7 @@ else if(isset($_POST['submitFond'])) {
     $nombre_adherents = array();
 
     for ($annee = $annee_actuelle; $annee >= $annee_min; $annee--) {
-        $resultat_adherents = mysqli_query($connexion, "SELECT COUNT(*) as nombre_adherents FROM Adherent WHERE numEcole = '$ecole_id' AND anneeAdhesion = '$annee'");
+        $resultat_adherents = mysqli_query($connexion, "SELECT COUNT(*) as nombre_adherents FROM Adherent WHERE numEcole = $ecole_id AND anneeAdhesion = $annee");
         $adherents = mysqli_fetch_assoc($resultat_adherents);
         $nombre_adherents[$annee] = $adherents['nombre_adherents'];
     }
@@ -62,27 +63,15 @@ else if(isset($_POST['submitFond'])) {
     foreach ($nombre_adherents as $annee => $nombre) {
         echo '<p>Le nombre d\'adhérents pour l\'année ' . $annee . ' est : ' . $nombre . '</p>';
     }
-    while ($cours = mysqli_fetch_assoc($liste_cours)) {
-        echo '<li>' . $cours['Libelle'] . ' <a href="#" onclick="editCours(' . $cours['code'] . ')">Modifier</a></li>';
-        echo '<form id="form-cours-' . $cours['code'] . '" style="display:none;" method="post">';
-        echo '<input type="text" name="libelle" value="' . $cours['Libelle'] . '">';
-        echo '<input type="text" name="age" value="' . $cours['Age'] . '">';
-        echo '<input type="hidden" name="code" value="' . $cours['code'] . '">';
-        echo '<input type="submit" name="submitCours" value="Enregistrer">';
-        echo '</form>';
-    }
-    if (isset($_POST['submitCours'])) {
-        $code = $_POST['code'];
-        $libelle = $_POST['libelle'];
-        $age = $_POST['age'];
-        $query = "UPDATE Cours SET Libelle = '$libelle', Age = '$age' WHERE code = $code";
-        $resultat_update = mysqli_query($connexion, $query);
-        if (!$resultat_update) {
-            echo "Erreur lors de la mise à jour du cours : " . mysqli_error($connexion);
-        } else {
-            header("Location: introduction_vue.php");
-            exit;
-        }
-    }
 }
+
+if (isset($_POST['submitFond'])){
+    echo '</form>';
+    echo'  <form method="post" action="index.php?page=tdb">';
+    echo ' <label for="SupprEcole">SupprimerEcole :</label>';
+    echo  '<input type="submit" name="SupprEcole" value="SupprEcole">';
+    echo '</form>';
+}
+
 ?>
+
