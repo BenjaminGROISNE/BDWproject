@@ -36,6 +36,7 @@
   echo ' <br><br>';
   echo  '<input type="submit" value="Valider">';
   echo '</form>';
+  
   $id_ecole = $_SESSION['idecole'];
 
   if (isset($_POST['nomEcole'])){

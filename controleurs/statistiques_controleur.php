@@ -75,7 +75,6 @@ if ($result) {
 	echo '</ul>';
 } 
 
-// Requête SQL
 $query = "SELECT Libelle
 FROM Comite
 WHERE Niveau = 'reg' AND IdFede = (SELECT IdFede FROM Federation WHERE Nom = 'Fédération Française de Danse')

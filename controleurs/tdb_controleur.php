@@ -18,7 +18,6 @@ $resultat = mysqli_query($connexion, "SELECT NomFondateur FROM Ecole_De_Danse OR
     
     if(isset($_POST['SupprEcole'])) {
         $ecole_id= $_SESSION['idecole'];
-         echo 'yo';
          $querytravaille = "DELETE FROM travaille WHERE idEcole='" . $ecole_id . "'";
          mysqli_query($connexion, $querytravaille);
          $queryadherent = "DELETE FROM Adherent WHERE numEcole='" . $ecole_id . "'";
